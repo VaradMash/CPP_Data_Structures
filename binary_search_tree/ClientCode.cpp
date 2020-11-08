@@ -10,22 +10,35 @@ int main()
 	do
 	{
 		cout<<"\n**************Menu*************"<<endl;
+		cout<<"0. Iterative insert"<<endl;
 		cout<<"1. Insert Node"<<endl;
 		cout<<"2. Search Tree"<<endl;
 		cout<<"3. Mirror image"<<endl;
 		cout<<"4. Height of tree"<<endl;//fault
 		cout<<"5. Level Order Display "<<endl;
 		cout<<"6. Display Leaves"<<endl;
-		cout<<"7. Display Tree (In-order)"<<endl;
-		cout<<"8. Display Tree (Pre-order)"<<endl;
-		cout<<"9. Display Tree (Post-order)"<<endl;
-		cout<<"10.Create duplicate"<<endl;
-		cout<<"11. Exit"<<endl;
+		cout<<"7. Display Tree (In-order - Recursive)"<<endl;
+		cout<<"8. Display Tree (Pre-order - Recursive))"<<endl;
+		cout<<"9. Display Tree (Post-order - Recursive))"<<endl;
+		cout<<"10.Display Tree (In-order - Iterative)"<<endl;
+		cout<<"11.Display Tree (Pre-order - Iterative))"<<endl;
+		cout<<"12.Display Tree (Post-order - Iterative))"<<endl;
+		cout<<"13.Create duplicate"<<endl;
+		cout<<"14.Display Parent nodes"<<endl;
+		cout<<"15.Exit"<<endl;
 		cout<<"*****************************"<<endl;
 		cout<<"Enter Choice Code : ";
 		cin>>choice;
 		switch(choice)
 		{
+		case 0:
+		{
+			int data;
+			cout<<"\nEnter Data : "<<endl;
+			cin>>data;
+			bst.iterative_insert(data);
+			break;
+		}
 		case 1:
 		{
 			int data;
@@ -64,7 +77,7 @@ int main()
 		}
 		case 5:
 		{
-			bst.level_order_display();
+			bst.level_order_display(bst.getRoot());
 			break;
 		}
 		case 6:
@@ -97,20 +110,34 @@ int main()
 		}
 		case 10:
 		{
-			BinarySearchTree<int> bst1 ;
-			bst1 = bst.getDuplicate(bst1.getRoot(), bst.getRoot());
-			cout<<"\nInorder :"<<endl;
-			bst1.recursive_inorder_display(bst.getRoot());
-			cout<<endl;
-			cout<<"\nPreorder : "<<endl;
-			bst1.recursive_preorder_display(bst.getRoot());
-			cout<<endl;
-			cout<<"\nPostOrder"<<endl;
-			bst1.recursive_postorder_display(bst.getRoot());\
-			cout<<endl;
+			cout<<"\nInorder"<<endl;
+			bst.iterative_inorder_display();
 			break;
 		}
 		case 11:
+		{
+			cout<<"\nPre Order"<<endl;
+			bst.iterative_preorder_display();
+			break;
+		}
+		case 12:
+		{
+			cout<<"\nPost Order"<<endl;
+			bst.iterative_postorder_display();
+			break;
+		}
+		case 13:
+		{
+
+			break;
+		}
+		case 14:
+		{
+			cout<<"Parent\t|LChild\t|RChild"<<endl;
+			bst.displayParents(bst.getRoot());
+			break;
+		}
+		case 15:
 		{
 			break;
 		}
@@ -118,9 +145,7 @@ int main()
 			cout<<"Invalid choice!"<<endl;
 			break;
 		}
-
-
-	}while(choice != 10);
+	}while(choice != 15);
 	cout<<"\nThank You !"<<endl;
 	return 0;
 }

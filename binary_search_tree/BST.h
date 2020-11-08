@@ -29,21 +29,23 @@ public:
 	BSTNode<T>* getRoot();								//Getter method for root
 	BSTNode<T>* getNode(T);								//This method is used to create a node with provided data
 	BSTNode<T>* recursive_insert(BSTNode<T>*,T);		//Method to insert new node in tree
+	void iterative_insert(T);							//Method to insert new node in tree iteratively
 	bool isEmpty();										//Method to determine whether tree is empty
-	bool isLeaf(BSTNode<T>*);
+	bool isLeaf(BSTNode<T>*);							//Method to determine if node is a leaf
 	void searchTree(T);									//Non recursive method to search tree
 	int height();										//method to calculate height of tree
-	void level_order_display();							//Method to display the tree in level order
+	void level_order_display(BSTNode<T>*);				//Method to display the tree in level order
 	void mirror(BSTNode<T>*);							//method to generate mirror image of the tree.
 	void displayLeaves(BSTNode<T>*);					//Method to display leaves
+	void displayParents(BSTNode<T>*);					//Method to display parents and their child nodes
 	BinarySearchTree<T> getDuplicate(BSTNode<T>*, BSTNode<T>*);//return copy of tree as an object
 	void recursive_inorder_display(BSTNode<T>*);		//recursive inorder display
 	void recursive_preorder_display(BSTNode<T>*);		//recursive preorder display
 	void recursive_postorder_display(BSTNode<T>*);		//recursive postorder display
+	void iterative_inorder_display();					//iterative inorder display
+	void iterative_preorder_display();					//iterative preorder display
+	void iterative_postorder_display();					//iterative postorder display
 
 };
-
-
-
 
 #endif /* SRC_BST_H_ */

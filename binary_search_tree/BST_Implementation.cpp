@@ -1,6 +1,7 @@
 #include <iostream>
 #include "BST.h"
 #include "Queue_Implementation.cpp"
+#include "Stack.h"
 using namespace std;
 
 template <typename T>
@@ -106,7 +107,7 @@ BSTNode<T>* BinarySearchTree<T>::recursive_insert(BSTNode<T>* r, T data)
 		else
 		{
 			cout<<"Duplication not allowed !"<<endl;
-			return nullptr;
+			return r;
 		}
 	}
 	return r;
@@ -133,6 +134,8 @@ void BinarySearchTree<T>::searchTree(T key)
 		if (key == temp->data)
 		{
 			cout<<key<<" found in tree"<<endl;
+			cout<<(temp->lchild == NULL)<<endl;
+			cout<<(temp->rchild == NULL)<<endl;
 			return;
 		}
 		else if (key < temp->data)
@@ -207,48 +210,6 @@ void BinarySearchTree<T>::mirror(BSTNode<T>* r)
 	}
 }
 
-
-template <typename T>
-void BinarySearchTree<T>::level_order_display()
-{
-
-	/*
-	 * Input : None
-	 * Utility : Display tree in level order (recursive)
-	 * Output : Tree in level order
-	 */
-	Queue<BSTNode<T>*> q;
-	BSTNode<T>* temp = root;
-	while(temp->lchild != NULL)
-	{
-		//visiting current node
-		cout<<temp->data<<" ";
-		//Enqueue left child
-		if(temp->lchild != NULL)
-		{
-			q.enqueue(temp->lchild);
-		}
-		//Enqueue right child
-		if(temp->rchild != NULL)
-		{
-			q.enqueue(temp->rchild);
-		}
-		//If queue is empty, return to call.
-		if(q.isEmpty())
-		{
-			return;
-		}
-		//else, dequeue element and store in temporary pointer
-		else
-		{
-			cout<<"Dequeued item"<<endl;
-			temp = q.dequeue();
-			cout<<temp->data<<".-. ";
-		}
-	}
-	cout<<endl;
-}
-
 template <typename T>
 bool BinarySearchTree<T>::isLeaf(BSTNode<T>* node)
 {
@@ -269,16 +230,21 @@ void BinarySearchTree<T>::displayLeaves(BSTNode<T>* node)
 	 * Output : Leaves if tree
 	 */
 	//using algorithm for in order traversal to display all leaves
+	if (this->isEmpty())
+	{
+		cout<<"Tree Empty !"<<endl;
+		return;
+	}
 	if (node == NULL)
 	{
 		return;
 	}
-	this->recursive_inorder_display(node->lchild);
+	this->displayLeaves(node->lchild);
 	if (this->isLeaf(node))
 	{
 		cout<<node->data<<" ";
 	}
-	this->recursive_inorder_display(node->rchild);
+	this->displayLeaves(node->rchild);
 }
 
 template <typename T>
@@ -343,3 +309,210 @@ BinarySearchTree<T> BinarySearchTree<T>::getDuplicate(BSTNode<T>* r_duplicate, B
 	return nullptr;
 }
 
+template <typename T>
+void BinarySearchTree<T>::displayParents(BSTNode<T>* r)
+{
+	/*
+	 * Input : None
+	 * Utility : Display parent nodes along with child
+	 * Output : tabular display of parent nodes
+	 */
+	//if tree is empty, return to call
+	if (this->isEmpty())
+	{
+		cout<<"Tree Empty !"<<endl;
+		return;
+	}
+	if (r == NULL)
+	{
+		return;
+	}
+	//Else, use in order traversal to display parent nodes
+	this->displayParents(r->lchild);
+	if (!this->isLeaf(r))
+	{
+
+		cout<<r->data<<"\t|";
+		if (r->lchild != NULL)
+		{
+			cout<<r->lchild->data<<"\t|";
+		}
+		else
+		{
+			cout<<"Empty\t|";
+		}
+		if(r->rchild != NULL)
+		{
+			cout<<r->rchild->data<<endl;
+		}
+		else
+		{
+			cout<<"Empty"<<endl;
+		}
+	}
+	this->displayParents(r->rchild);
+}
+
+template <typename T>
+void BinarySearchTree<T>::level_order_display(BSTNode<T>* t)
+{
+	/*
+	 * Input : None
+	 * Utility : Display tree in level order
+	 * Output : Level order display of tree
+	 */
+	//If tree is empty, return to call
+	if (this->isEmpty())
+	{
+		cout<<"Tree Empty!"<<endl;
+		return;
+	}
+	Queue<BSTNode<T>*> q;
+	while(t != NULL)
+	{
+		cout<<t->data<<" ";
+		if (t->lchild != NULL)
+			q.enqueue(t->lchild);
+		if (t->rchild != NULL)
+			q.enqueue(t->rchild);
+		if (!q.isEmpty())
+			t = q.dequeue();
+		else
+		{
+			return;
+		}
+	}
+}
+
+template <typename T>
+void BinarySearchTree<T>::iterative_inorder_display()
+{
+	if (root == NULL)
+	{
+		cout<<"Tree Empty !"<<endl;
+		return;
+	}
+	Stack<BSTNode<T>*> s;
+	BSTNode<T>* top = root;
+	while(top != NULL || !s.isEmpty())
+	{
+		while(top != NULL)
+		{
+			s.push(top);
+			top = top->lchild;
+		}
+		top = s.pop();
+		cout<<top->data<<" ";
+		top = top->rchild;
+	}
+}
+
+template <typename T>
+void BinarySearchTree<T>::iterative_preorder_display()
+{
+	if (root == NULL)
+	{
+		cout<<"Tree Empty!"<<endl;
+		return;
+	}
+	Stack<BSTNode<T>*> nodeStack;
+	BSTNode<T>* t = root;
+	while(!nodeStack.isEmpty() || t != NULL)
+	{
+		while(t != NULL)
+		{
+			cout<<t->data<<" ";
+			nodeStack.push(t);
+			t = t->lchild;
+		}
+		if (!nodeStack.isEmpty())
+		{
+			t = nodeStack.pop();
+			t = t->rchild;
+		}
+	}
+}
+
+template <typename T>
+void BinarySearchTree<T>::iterative_postorder_display()
+{
+	if (root == NULL)
+	{
+		cout<<"Tree Empty!"<<endl;
+		return;
+	}
+	Stack<BSTNode<T>*> nodeStack;
+	Stack<int> flagStack;
+	int flag = 0;
+	BSTNode<T>* t = root;
+	do
+	{
+		while(t != NULL && flag == 0)
+		{
+			nodeStack.push(t);
+			flagStack.push(1);
+			t = t->lchild;
+		}
+		if(!nodeStack.isEmpty())
+		{
+			t = nodeStack.pop();
+			flag = flagStack.pop();
+			if (flag == 1)
+			{
+				nodeStack.push(t);
+				flagStack.push(2);
+				t = t->rchild;
+				flag = 0;
+			}
+			else
+			{
+				cout<<t->data<< " ";
+			}
+		}
+	}while(!nodeStack.isEmpty());
+}
+
+template <typename T>
+void BinarySearchTree<T>::iterative_insert(T data)
+{
+	/*
+	 * Input : data
+	 * Utility : Create and place new node in tree
+	 * Output : None
+	 */
+	//If tree is empty, add node to root.
+	if (this->isEmpty())
+	{
+		root = this->getNode(data);
+		return;
+	}
+	//Else locate position of node using 2 pointers
+	BSTNode<T>* P = root;
+	BSTNode<T>* Q = root;
+	while (Q != NULL && data != P->data)
+	{
+		P = Q;
+		//traverse to left if data is less than value at P
+		if (data < P->data)
+			Q = P->lchild;
+		//traverse to right if data is less than value at P
+		if (data > P->data)
+			Q = P->rchild;
+	}
+	//If duplication is found, return to call
+	if (data == P->data)
+	{
+		cout<<"Duplication not allowed!"<<endl;
+		return;
+	}
+	//Insert node at left if value is less than that of P
+	if (data > P->data)
+	{
+		P->rchild = this->getNode(data);
+	}
+	//Insert node at right if value is less than that of P
+	else
+	{
+		P->lchild = this->getNode(data);
+	}
+}
