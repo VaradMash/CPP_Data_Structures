@@ -38,14 +38,16 @@ public:
 	void mirror(BSTNode<T>*);							//method to generate mirror image of the tree.
 	void displayLeaves(BSTNode<T>*);					//Method to display leaves
 	void displayParents(BSTNode<T>*);					//Method to display parents and their child nodes
-	BinarySearchTree<T> getDuplicate(BSTNode<T>*, BSTNode<T>*);//return copy of tree as an object
+	BSTNode<T>* getDuplicate(BSTNode<T>*);				//return copy of tree as an object
 	void recursive_inorder_display(BSTNode<T>*);		//recursive inorder display
 	void recursive_preorder_display(BSTNode<T>*);		//recursive preorder display
 	void recursive_postorder_display(BSTNode<T>*);		//recursive postorder display
 	void iterative_inorder_display();					//iterative inorder display
 	void iterative_preorder_display();					//iterative preorder display
 	void iterative_postorder_display();					//iterative postorder display
-
+	BSTNode<T>* delete_node(T, BSTNode<T>*);			//recursive delete method
+	T find_min(BSTNode<T>*);							//Find minimum node from right subtree.
+	void setRoot(BSTNode<T>*);							//Setter method for root.
 };
 
 #endif /* SRC_BST_H_ */

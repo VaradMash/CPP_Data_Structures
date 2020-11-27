@@ -1,8 +1,8 @@
 /*
- * Queue.h
- *
- *  Created on: 27-Oct-2020
- *      Author: varadm
+ * Author : Varad Mashalkar
+ * Lab : Data Structures and algorithms
+ * Version : 1
+ * File Description : ADT of Queue using linked organization.
  */
 
 

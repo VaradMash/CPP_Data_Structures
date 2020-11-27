@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BST_Implementation.cpp"
+#include "BST.h"
 using namespace std;
 
 int main()
@@ -25,7 +26,8 @@ int main()
 		cout<<"12.Display Tree (Post-order - Iterative))"<<endl;
 		cout<<"13.Create duplicate"<<endl;
 		cout<<"14.Display Parent nodes"<<endl;
-		cout<<"15.Exit"<<endl;
+		cout<<"15.Delete Node"<<endl;
+		cout<<"16.Exit"<<endl;
 		cout<<"*****************************"<<endl;
 		cout<<"Enter Choice Code : ";
 		cin>>choice;
@@ -128,7 +130,17 @@ int main()
 		}
 		case 13:
 		{
-
+			BinarySearchTree<int> bst1;
+			bst1.setRoot(bst.getDuplicate(bst.getRoot()));
+			cout<<"\nInorder :"<<endl;
+			bst1.recursive_inorder_display(bst.getRoot());
+			cout<<endl;
+			cout<<"\nPreorder : "<<endl;
+			bst1.recursive_preorder_display(bst.getRoot());
+			cout<<endl;
+			cout<<"\nPostOrder"<<endl;
+			bst1.recursive_postorder_display(bst.getRoot());\
+			cout<<endl;
 			break;
 		}
 		case 14:
@@ -139,13 +151,22 @@ int main()
 		}
 		case 15:
 		{
+			int data;
+			cout<<"Enter node to be deleted : ";
+			cin>>data;
+			bst.delete_node(data, bst.getRoot());
+			cout<<"Operation complete!"<<endl;
+			break;
+		}
+		case 16:
+		{
 			break;
 		}
 		default:
 			cout<<"Invalid choice!"<<endl;
 			break;
 		}
-	}while(choice != 15);
+	}while(choice != 16);
 	cout<<"\nThank You !"<<endl;
 	return 0;
 }

@@ -299,14 +299,22 @@ void BinarySearchTree<T>::recursive_postorder_display(BSTNode<T>* node)
 }
 
 template <typename T>
-BinarySearchTree<T> BinarySearchTree<T>::getDuplicate(BSTNode<T>* r_duplicate, BSTNode<T>* r)
+BSTNode<T>* BinarySearchTree<T>::getDuplicate(BSTNode<T>* r_duplicate)
 {
 	/*
 	 * Input : root
 	 * Utility : Create duplicate of tree (recursive)
-	 * Output : Duplicate object of current binary search tree
+	 * Output : root of Duplicate object of current binary search tree
 	 */
-	return nullptr;
+	if (r_duplicate == NULL)
+	{
+		return r_duplicate;
+	}
+	BSTNode<T>* temp = new BSTNode<T>();
+	temp->data = r_duplicate->data;
+	temp->lchild = this->getDuplicate(r_duplicate->lchild);
+	temp->rchild = this->getDuplicate(r_duplicate->rchild);
+	return temp;
 }
 
 template <typename T>
@@ -515,4 +523,98 @@ void BinarySearchTree<T>::iterative_insert(T data)
 	{
 		P->lchild = this->getNode(data);
 	}
+}
+
+template <typename T>
+BSTNode<T>* BinarySearchTree<T>::delete_node(T data, BSTNode<T>* t)
+{
+	/*
+	 * Input : Data of node to be deleted and root.
+	 * Utility : delete node and replace node with minimum node from right subtree.
+	 * Output : BSTNode<T>
+	 */
+	//if tree is empty, return to call.
+	if (this->isEmpty())
+	{
+		cout<<"Tree Empty !"<<endl;
+		return root;
+	}
+	//if the element is not found, return to call.
+	if (t == NULL)
+	{
+		cout<<"Element not found !"<<endl;
+		return t;
+	}
+	//Else, delete node.
+	else
+	{
+		if (data < t->data)
+		{
+			t->lchild = this->delete_node(data, t->lchild);
+		}
+		else if (data > t->data)
+		{
+			t->rchild = this->delete_node(data, t->rchild);
+		}
+		else
+		{
+			//Node with only one parent
+			//if left pointer is null, node is replaced by right child and node is removed.
+			if (t->lchild == NULL && t->rchild == NULL)
+			{
+				delete(t);
+				t = NULL;
+			}
+			else if (t->lchild == NULL)
+			{
+				BSTNode<T>* temp = t;
+				t = t->rchild;
+				free(temp);
+			}
+			//if right pointer is null, node is replaced by left child and node is removed.
+			else if (t->rchild == NULL)
+			{
+				BSTNode<T>* temp = t;
+				t = t->lchild;
+				free(temp);
+			}
+			else
+			{
+				T temp = this->find_min(t->rchild);
+				t->data = temp;
+				t->rchild = this->delete_node(t->data, t->rchild);
+			}
+		}
+	}
+	return t;
+}
+
+template <typename T>
+T BinarySearchTree<T>::find_min(BSTNode<T>* root)
+{
+	 /*
+	  * Input : root of right subtree
+	  * Utility : Return node with minimum value from given tree(root).
+	  *	Output : Pointer to node.
+	  */
+	BSTNode<T>* temp;
+	if (root->rchild != NULL)
+	{
+		temp = root->lchild;
+		while(temp->lchild != NULL)
+		{
+			temp = temp->lchild;
+		}
+		return temp->data;
+	}
+	return 0;
+}
+
+template <typename T>
+void BinarySearchTree<T>::setRoot(BSTNode<T>* r)
+{
+	/*
+	 * Setter method for root.
+	 */
+	this->root = r;
 }

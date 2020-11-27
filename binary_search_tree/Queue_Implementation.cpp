@@ -1,3 +1,10 @@
+/*
+ * Author : Varad Mashalkar
+ * Lab : Data Structures and algorithms
+ * Version : 1
+ * File Description : Implementation of Queue using linked organization.
+ */
+
 #include <iostream>
 #include "Queue.h"
 using namespace std;
