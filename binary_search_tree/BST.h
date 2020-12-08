@@ -33,7 +33,9 @@ public:
 	bool isEmpty();										//Method to determine whether tree is empty
 	bool isLeaf(BSTNode<T>*);							//Method to determine if node is a leaf
 	void searchTree(T);									//Non recursive method to search tree
+	void searchTree_recursive(T, BSTNode<T>*);			//Recursive method to search tree.
 	int height();										//method to calculate height of tree
+	int height_recursive(BSTNode<T>*);					//method to calculate height of tree in recursive manner.
 	void level_order_display(BSTNode<T>*);				//Method to display the tree in level order
 	void mirror(BSTNode<T>*);							//method to generate mirror image of the tree.
 	void displayLeaves(BSTNode<T>*);					//Method to display leaves

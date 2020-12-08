@@ -134,8 +134,6 @@ void BinarySearchTree<T>::searchTree(T key)
 		if (key == temp->data)
 		{
 			cout<<key<<" found in tree"<<endl;
-			cout<<(temp->lchild == NULL)<<endl;
-			cout<<(temp->rchild == NULL)<<endl;
 			return;
 		}
 		else if (key < temp->data)
@@ -617,4 +615,61 @@ void BinarySearchTree<T>::setRoot(BSTNode<T>* r)
 	 * Setter method for root.
 	 */
 	this->root = r;
+}
+
+
+template <typename T>
+void BinarySearchTree<T>::searchTree_recursive(T data, BSTNode<T>* r)
+{
+	/*
+	 * Input : Data to be searched
+	 * Utility : Search Tree for data
+	 * Output : Search Status
+	 */
+	//return to call if tree is empty
+	if (this->isEmpty())
+	{
+		cout<<"Tree Empty !"<<endl;
+		return;
+	}
+	//If r is null, element not found. return to call
+	if (r == NULL)
+	{
+		cout<<"Not found !"<<endl;
+		return;
+	}
+	//if data is found, display message and return to call.
+	if (r->data == data)
+	{
+		cout<<data<<" found in tree"<<endl;
+		return;
+	}
+	//go to left sub tree if data is more than current root's data.
+	else if (r->data > data)
+	{
+		this->searchTree_recursive(data, r->lchild);
+	}
+	//go to right sub tree if data is more than current root's data.
+	else
+	{
+		this->searchTree_recursive(data, r->rchild);
+	}
+}
+
+template <typename T>
+int BinarySearchTree<T>::height_recursive(BSTNode<T>* r)
+{
+	/*
+	 * Input : Node pointer
+	 * Utility : Calculate height of tree. (Recursive)
+	 * Output : Height.
+	 */
+	if (r == NULL)
+	{
+		return -1;
+	}
+	else
+	{
+		return (1 + this->max(this->height_recursive(r->lchild), this->height_recursive(r->rchild)));
+	}
 }
